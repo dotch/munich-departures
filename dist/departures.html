@@ -1,0 +1,15 @@
+<template>
+  <a href="#" click.delegate="app.clearSelection()">
+    back
+  </a>
+  <section>
+    <div>
+      ${time}
+    </div>
+    <div repeat.for="departure of departures">
+      ${departure.line}
+      ${departure.destination}
+      ${departure.timeRemaining}
+    </div>
+  </section>
+</template>
