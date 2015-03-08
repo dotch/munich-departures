@@ -60,6 +60,6 @@ export class Stations{
 
   activate(){
     this.loadFavorites();
-    this.fetchStations().then(() => this.updateFilter();)
+    this.fetchStations().then(() => this.updateFilter());
   }
 }
