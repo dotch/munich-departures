@@ -1,7 +1,7 @@
 import {HttpClient} from 'aurelia-http-client';
 import {App} from './app';
 
-var url = 'http://mvg.herokuapp.com/stations'
+var url = 'http://mvg.herokuapp.com/stations';
 
 export class Stations{
   static inject() { return [App,HttpClient]; }
@@ -11,7 +11,7 @@ export class Stations{
     this.favorites = [];
     this.http = http;
     this.app = app;
-    this.filter;
+    this.filter = '';
   }
 
   loadFavorites() {
@@ -36,6 +36,12 @@ export class Stations{
     }
     this.saveFavorites();
     station.isFavorite = !station.isFavorite;
+  }
+
+  getStation(name) {
+    for (var i = 0; i < this.stations.length; i++) {
+      if (this.stations[i].name === name) return this.stations[i];
+    }
   }
 
   updateFilter() {

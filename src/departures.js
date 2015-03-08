@@ -7,7 +7,6 @@ export class Departures{
   static inject() { return [App, HttpClient]; }
   constructor(app, http){
     this.departures = [];
-    this.time;
     this.http = http;
     this.app = app;
   }

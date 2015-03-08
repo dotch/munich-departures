@@ -16,9 +16,9 @@ export class App {
     });
   }
 
-  select(station){
-    this.selectedStation = station.name;
-    this.router.navigate('stations/' + station.name);
+  select(stationName){
+    this.selectedStation = stationName;
+    this.router.navigate('stations/' + stationName);
   }
 
   clearSelection(){

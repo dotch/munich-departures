@@ -1,7 +1,7 @@
 <template>
   <section>
     <div repeat.for="favorite of favorites">
-      <a href="#" click.delegate="$parent.app.select(station)">
+      <a href="#" click.delegate="$parent.app.select(favorite)">
         ${favorite}
       </a>
       <button click.delegate="$parent.removeFavorite(favorite)">unfav</button>
@@ -10,10 +10,10 @@
            placeholer="filter.."
            keyup.delegate="updateFilter()">
     <div repeat.for="station of filteredStations">
-      <a href="#" click.delegate="$parent.app.select(station)">
+      <a href="#" click.delegate="$parent.app.select(station.name)">
         ${station.name}
       </a>
-      <button click.delegate="$parent.toggleFavorite(station)">${ station.isFavorite ? 'unfav' : 'fav' }</button>
+      <button click.delegate="$parent.toggleFavorite(station.name)">${ station.isFavorite ? 'unfav' : 'fav' }</button>
     </div>
   </section>
 </template>
