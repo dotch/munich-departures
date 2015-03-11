@@ -7,11 +7,9 @@ export class Stations{
   static inject() { return [App,HttpClient]; }
   constructor(app, http){
     this.stations = [];
-    this.filteredStations = [];
     this.favorites = [];
     this.http = http;
     this.app = app;
-    this.filter = '';
   }
 
   loadFavorites() {
@@ -22,36 +20,24 @@ export class Stations{
     localStorage.setItem('fav', JSON.stringify(this.favorites));
   }
 
+  addFavorite(name) {
+    this.favorites.push(name);
+    this.saveFavorites();
+  }
+
   removeFavorite(name) {
     this.favorites.splice(this.favorites.indexOf(name), 1);
-    this.stations.find(x => x.name == name).isFavorite = false;
     this.saveFavorites();
   }
 
   toggleFavorite(station) {
     if (station.isFavorite) {
-      this.favorites.splice(this.favorites.indexOf(station.name), 1);
+      this.removeFavorite(station.name);
     } else {
-      this.favorites.push(station.name);
+      this.addFavorite(station.name);
     }
-    this.saveFavorites();
     station.isFavorite = !station.isFavorite;
-  }
-
-  getStation(name) {
-    for (var i = 0; i < this.stations.length; i++) {
-      if (this.stations[i].name === name) return this.stations[i];
-    }
-  }
-
-  updateFilter() {
-    if (!this.filter) {
-      this.filteredStations = this.stations;
-    } else {
-      this.filteredStations = this.stations.filter(
-        x => x.name.toLowerCase().startsWith(this.filter.toLowerCase())
-      );
-    }
+    this.stations.pop();
   }
 
   fetchStations() {
@@ -66,6 +52,19 @@ export class Stations{
 
   activate(){
     this.loadFavorites();
-    this.fetchStations().then(() => this.updateFilter());
+    return this.fetchStations();
+  }
+}
+
+export class IsFavoriteValueConverter {
+  toView(items) {
+    console.log('fav');
+    return items.slice(0).filter(x => x.isFavorite);
+  }
+}
+
+export class FilterValueConverter {
+  toView(items, filter) {
+    return items.filter(x => x.name.toLowerCase().startsWith(filter));
   }
 }

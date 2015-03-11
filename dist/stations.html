@@ -1,19 +1,32 @@
 <template>
   <section>
-    <div repeat.for="favorite of favorites">
-      <a href="#" click.delegate="$parent.app.select(favorite)">
-        ${favorite}
-      </a>
-      <button click.delegate="$parent.removeFavorite(favorite)">unfav</button>
+    <div repeat.for="station of stations" class="row">
+      <div if.bind="station.isFavorite">
+        <div class="col-xs-8">
+          <a href="#" click.delegate="$parent.app.select(station)">
+            ${station.name}
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <button click.delegate="$parent.toggleFavorite(station)">
+            <span class="glyphicon glyphicon-${ station.isFavorite ? 'star' : 'star-empty' }"></span>
+          </button>
+        </div>
+      </div>
     </div>
-    <input value.bind="filter"
-           placeholer="filter.."
-           keyup.delegate="updateFilter()">
-    <div repeat.for="station of filteredStations">
-      <a href="#" click.delegate="$parent.app.select(station.name)">
-        ${station.name}
-      </a>
-      <button click.delegate="$parent.toggleFavorite(station.name)">${ station.isFavorite ? 'unfav' : 'fav' }</button>
+    <input placeholer="filter.."
+           ref="filterInput">
+    <div repeat.for="station of stations | filter:filterInput.value" class="row">
+      <div class="col-xs-8">
+        <a href="#" click.delegate="$parent.app.select(station)">
+          ${station.name}
+        </a>
+      </div>
+      <div class="col-xs-4">
+        <button click.delegate="$parent.toggleFavorite(station)">
+          <span class="glyphicon glyphicon-${ station.isFavorite ? 'star' : 'star-empty' }"></span>
+        </button>
+      </div>
     </div>
   </section>
 </template>

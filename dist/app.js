@@ -1,7 +1,6 @@
 System.register(["aurelia-router", "bootstrap"], function (_export) {
-  "use strict";
+  var Router, bootstrap, _createClass, _classCallCheck, App;
 
-  var Router, bootstrap, _prototypeProperties, _classCallCheck, App;
   return {
     setters: [function (_aureliaRouter) {
       Router = _aureliaRouter.Router;
@@ -9,7 +8,9 @@ System.register(["aurelia-router", "bootstrap"], function (_export) {
       bootstrap = _bootstrap["default"];
     }],
     execute: function () {
-      _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+      "use strict";
+
+      _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
       _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
@@ -26,35 +27,27 @@ System.register(["aurelia-router", "bootstrap"], function (_export) {
           });
         }
 
-        _prototypeProperties(App, {
-          inject: {
-            value: function inject() {
-              return [Router];
-            },
-            writable: true,
-            configurable: true
-          }
-        }, {
+        _createClass(App, {
           select: {
-            value: function select(stationName) {
-              this.selectedStation = stationName;
-              this.router.navigate("stations/" + stationName);
-            },
-            writable: true,
-            configurable: true
+            value: function select(station) {
+              this.selectedStation = station;
+              this.router.navigate("stations/" + station.name);
+            }
           },
           clearSelection: {
             value: function clearSelection() {
               this.selectedStation = undefined;
               this.router.navigate("stations/");
-            },
-            writable: true,
-            configurable: true
+            }
           },
           activate: {
-            value: function activate() {},
-            writable: true,
-            configurable: true
+            value: function activate() {}
+          }
+        }, {
+          inject: {
+            value: function inject() {
+              return [Router];
+            }
           }
         });
 
@@ -63,4 +56,4 @@ System.register(["aurelia-router", "bootstrap"], function (_export) {
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7TUFBUSxNQUFNLEVBQ1AsU0FBUyx5Q0FFSCxHQUFHOzs7QUFIUixZQUFNLGtCQUFOLE1BQU07O0FBQ1AsZUFBUzs7Ozs7OztBQUVILFNBQUc7QUFFSCxpQkFGQSxHQUFHLENBRUYsTUFBTSxFQUFFLEdBQUc7Z0NBRlosR0FBRzs7QUFHWixjQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztBQUNyQixjQUFJLENBQUMsR0FBRyxHQUFHLEdBQUcsQ0FBQzs7QUFFZixjQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxVQUFBLE1BQU0sRUFBSTtBQUM5QixrQkFBTSxDQUFDLEtBQUssR0FBRyxVQUFVLENBQUM7QUFDMUIsa0JBQU0sQ0FBQyxHQUFHLENBQUMsQ0FDVCxFQUFFLEtBQUssRUFBRSxDQUFDLEVBQUUsRUFBQyxVQUFVLENBQUMsRUFBRSxRQUFRLEVBQUUsVUFBVSxFQUFFLEVBQ2hELEVBQUUsS0FBSyxFQUFFLGNBQWMsRUFBRyxRQUFRLEVBQUUsWUFBWSxFQUFFLENBQ25ELENBQUMsQ0FBQztXQUNKLENBQUMsQ0FBQztTQUNKOzs2QkFiVSxHQUFHO0FBQ1AsZ0JBQU07bUJBQUEsa0JBQUc7QUFBRSxxQkFBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO2FBQUU7Ozs7O0FBY3BDLGdCQUFNO21CQUFBLGdCQUFDLFdBQVcsRUFBQztBQUNqQixrQkFBSSxDQUFDLGVBQWUsR0FBRyxXQUFXLENBQUM7QUFDbkMsa0JBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUMsQ0FBQzthQUNqRDs7OztBQUVELHdCQUFjO21CQUFBLDBCQUFFO0FBQ2Qsa0JBQUksQ0FBQyxlQUFlLEdBQUcsU0FBUyxDQUFDO0FBQ2pDLGtCQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsQ0FBQzthQUNuQzs7OztBQUVELGtCQUFRO21CQUFBLG9CQUFFLEVBRVQ7Ozs7OztlQTNCVSxHQUFHIiwiZmlsZSI6ImFwcC5qcyIsInNvdXJjZVJvb3QiOiIvc3JjLyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO01BQVEsTUFBTSxFQUNQLFNBQVMsaUNBRUgsR0FBRzs7OztBQUhSLFlBQU0sa0JBQU4sTUFBTTs7QUFDUCxlQUFTOzs7Ozs7Ozs7QUFFSCxTQUFHO0FBRUgsaUJBRkEsR0FBRyxDQUVGLE1BQU0sRUFBRSxHQUFHLEVBQUU7Z0NBRmQsR0FBRzs7QUFHWixjQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztBQUNyQixjQUFJLENBQUMsR0FBRyxHQUFHLEdBQUcsQ0FBQzs7QUFFZixjQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxVQUFBLE1BQU0sRUFBSTtBQUM5QixrQkFBTSxDQUFDLEtBQUssR0FBRyxVQUFVLENBQUM7QUFDMUIsa0JBQU0sQ0FBQyxHQUFHLENBQUMsQ0FDVCxFQUFFLEtBQUssRUFBRSxDQUFDLEVBQUUsRUFBQyxVQUFVLENBQUMsRUFBRSxRQUFRLEVBQUUsVUFBVSxFQUFFLEVBQ2hELEVBQUUsS0FBSyxFQUFFLGNBQWMsRUFBRyxRQUFRLEVBQUUsWUFBWSxFQUFFLENBQ25ELENBQUMsQ0FBQztXQUNKLENBQUMsQ0FBQztTQUNKOztxQkFiVSxHQUFHO0FBZWQsZ0JBQU07bUJBQUEsZ0JBQUMsT0FBTyxFQUFDO0FBQ2Isa0JBQUksQ0FBQyxlQUFlLEdBQUcsT0FBTyxDQUFDO0FBQy9CLGtCQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxXQUFXLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO2FBQ2xEOztBQUVELHdCQUFjO21CQUFBLDBCQUFFO0FBQ2Qsa0JBQUksQ0FBQyxlQUFlLEdBQUcsU0FBUyxDQUFDO0FBQ2pDLGtCQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsQ0FBQzthQUNuQzs7QUFFRCxrQkFBUTttQkFBQSxvQkFBRSxFQUVUOzs7QUExQk0sZ0JBQU07bUJBQUEsa0JBQUc7QUFBRSxxQkFBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO2FBQUU7Ozs7ZUFEekIsR0FBRyIsImZpbGUiOiJhcHAuanMiLCJzb3VyY2VSb290IjoiL3NyYy8ifQ==
