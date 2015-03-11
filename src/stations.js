@@ -37,7 +37,6 @@ export class Stations{
       this.addFavorite(station.name);
     }
     station.isFavorite = !station.isFavorite;
-    this.stations.pop();
   }
 
   fetchStations() {
