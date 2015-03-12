@@ -1,5 +1,4 @@
 import {Router} from 'aurelia-router';
-import bootstrap from 'bootstrap';
 
 export class App {
   static inject() { return [Router]; }

@@ -1,5 +1,5 @@
 System.register(["aurelia-http-client", "./app"], function (_export) {
-  var HttpClient, App, _createClass, _classCallCheck, url, Stations, IsFavoriteValueConverter, FilterValueConverter;
+  var HttpClient, App, _createClass, _classCallCheck, url, Stations, IsFavoriteValueConverter, FilterByTermValueConverter;
 
   return {
     setters: [function (_aureliaHttpClient) {
@@ -20,43 +20,19 @@ System.register(["aurelia-http-client", "./app"], function (_export) {
           _classCallCheck(this, Stations);
 
           this.stations = [];
-          this.favorites = [];
           this.http = http;
           this.app = app;
         }
 
         _createClass(Stations, {
-          loadFavorites: {
-            value: function loadFavorites() {
-              this.favorites = JSON.parse(localStorage.getItem("fav"));
+          loadStations: {
+            value: function loadStations() {
+              this.stations = JSON.parse(localStorage.getItem("stations")) || [];
             }
           },
-          saveFavorites: {
-            value: function saveFavorites() {
-              localStorage.setItem("fav", JSON.stringify(this.favorites));
-            }
-          },
-          addFavorite: {
-            value: function addFavorite(name) {
-              this.favorites.push(name);
-              this.saveFavorites();
-            }
-          },
-          removeFavorite: {
-            value: function removeFavorite(name) {
-              this.favorites.splice(this.favorites.indexOf(name), 1);
-              this.saveFavorites();
-            }
-          },
-          toggleFavorite: {
-            value: function toggleFavorite(station) {
-              if (station.isFavorite) {
-                this.removeFavorite(station.name);
-              } else {
-                this.addFavorite(station.name);
-              }
-              station.isFavorite = !station.isFavorite;
-              this.stations.pop();
+          saveStations: {
+            value: function saveStations() {
+              localStorage.setItem("stations", JSON.stringify(this.stations));
             }
           },
           fetchStations: {
@@ -64,18 +40,35 @@ System.register(["aurelia-http-client", "./app"], function (_export) {
               var _this = this;
 
               return this.http.get(url).then(function (response) {
-                var stations = response.content;
-                for (var i = 0; i < stations.length; i++) {
-                  stations[i].isFavorite = _this.favorites.indexOf(stations[i].name) !== -1 ? true : false;
-                  _this.stations.push(stations[i]);
-                }
+                _this.stations = response.content.map(function (x) {
+                  x.isFavorite = false;
+                  return x;
+                });
+                _this.saveStations();
               });
+            }
+          },
+          toggleFavorite: {
+            value: function toggleFavorite(station) {
+              station.isFavorite = !station.isFavorite;
+              this.saveStations();
+              // FIXME: hack to trigger filter execution
+              // this.stations = this.stations.slice();
+            }
+          },
+          initializeStations: {
+            value: function initializeStations() {
+              // load stations from locaStorage first
+              this.loadStations();
+              // if no stations could be loaded get them from the server
+              if (!this.stations.length) {
+                return this.fetchStations();
+              }
             }
           },
           activate: {
             value: function activate() {
-              this.loadFavorites();
-              return this.fetchStations();
+              return this.initializeStations();
             }
           }
         }, {
@@ -96,8 +89,7 @@ System.register(["aurelia-http-client", "./app"], function (_export) {
         _createClass(IsFavoriteValueConverter, {
           toView: {
             value: function toView(items) {
-              console.log("fav");
-              return items.slice(0).filter(function (x) {
+              return items.filter(function (x) {
                 return x.isFavorite;
               });
             }
@@ -106,24 +98,24 @@ System.register(["aurelia-http-client", "./app"], function (_export) {
 
         return IsFavoriteValueConverter;
       })());
-      FilterValueConverter = _export("FilterValueConverter", (function () {
-        function FilterValueConverter() {
-          _classCallCheck(this, FilterValueConverter);
+      FilterByTermValueConverter = _export("FilterByTermValueConverter", (function () {
+        function FilterByTermValueConverter() {
+          _classCallCheck(this, FilterByTermValueConverter);
         }
 
-        _createClass(FilterValueConverter, {
+        _createClass(FilterByTermValueConverter, {
           toView: {
-            value: function toView(items, filter) {
+            value: function toView(items, term) {
               return items.filter(function (x) {
-                return x.name.toLowerCase().startsWith(filter);
+                return x.name.toLowerCase().startsWith(term);
               });
             }
           }
         });
 
-        return FilterValueConverter;
+        return FilterByTermValueConverter;
       })());
     }
   };
 });
-//# sourceMappingURL=data:application/json;base64,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
+//# sourceMappingURL=data:application/json;base64,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
