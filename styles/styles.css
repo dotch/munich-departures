@@ -45,22 +45,7 @@ section {
     max-width: 425px;
 }
 
-.station-list {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-}
-
-.station-list .station {
-  text-align: center;
-  border: 1px solid black;
-  height: 50px;
-  flex-shrink: 1;
-  flex-basis: 300px;
-  display: flex;
-  justify-content: center;
-}
-
-.station-list .station > * {
-  align-self: center;
+.list-group {
+  max-width: 400px;
+  margin: auto;
 }

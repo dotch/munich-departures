@@ -33,7 +33,7 @@ export class Stations{
     station.isFavorite = !station.isFavorite;
     this.saveStations();
     // FIXME: hack to trigger filter execution
-    // this.stations = this.stations.slice();
+    this.stations = this.stations.slice();
   }
 
   initializeStations() {
@@ -58,6 +58,7 @@ export class IsFavoriteValueConverter {
 
 export class FilterByTermValueConverter {
   toView(items, term) {
-    return items.filter(x => x.name.toLowerCase().startsWith(term));
+    if (!term) return [];
+    return items.filter(x => x.name.toLowerCase().indexOf(term.toLowerCase()) !== -1);
   }
 }
